@@ -1,0 +1,56 @@
+header, footer {
+  margin: 5px 10px 5px 10px;
+  text-align: center;
+}
+
+header {
+  font-weight: bold;
+}
+
+md-sidenav {
+  background-color: #222222;
+  color: #FFFFFF;
+  height: fit-content;
+  width: 100%;
+}
+
+md-input-container {
+  padding: 2px;
+}
+
+md-slider {
+  max-width: 150px;
+}
+
+input, md-slider {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.sidenav {
+  border-radius: 5px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.option-left {
+  width: 130px;
+  max-width: none;
+}
+
+.option-title {
+  display: inline-block;
+}
+
+.option-value {
+  text-align: right;
+}
+
+.popout-button {
+  font-size: 32px;
+  height: 36px;
+  width: 36px;
+}
+
+.error {
+  color: #FF3030;
+}

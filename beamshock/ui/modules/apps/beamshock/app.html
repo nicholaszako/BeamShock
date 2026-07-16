@@ -1,0 +1,62 @@
+<div class="beamshock">
+  <link type="text/css" rel="stylesheet" href="/ui/modules/apps/beamshock/app.css" />
+  <div ng-controller="ctrl" ng-cloak>
+    <div>
+      <md-button ng-click="openSettings()" class="popout-button" aria-label="Settings">⚡</md-button>
+    </div>
+    <md-sidenav class="sidenav" md-component-id="settings" md-disable-backdrop="" md-whiteframe="4">
+      <header>{{ ui.settingsTitle }}</header>
+      <hr>
+      <div class="options">
+        <md-list-item md-no-ink>
+          <span></span>
+          <md-checkbox ng-model="config.modEnabled">{{ ui.modEnabled.title }}</md-checkbox>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <md-input-container>
+            <span class="option-title">{{ ui.api.key.title }}</span>
+            <input type="text" ng-model="config.api.token" required="" md-maxlength="64">
+          </md-input-container>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <md-input-container>
+            <span class="option-title">{{ ui.api.shockerId.title }}</span>
+            <input type="text" ng-model="config.api.shockerId" required="">
+          </md-input-container>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <span class="option-left">
+            <span class="option-title">{{ ui.minShock.title }}</span>
+            <span class="option-value">{{ config.minShock }}</span>
+            <span class="option-unit">{{ ui.minShock.unit }}</span>
+          </span>
+          <md-slider flex min="1" max="100" ng-model="config.minShock" class="md-accent"></md-slider>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <span class="option-left">
+            <span class="option-title">{{ ui.maxShock.title }}</span>
+            <span class="option-value">{{ config.maxShock }}</span>
+            <span class="option-unit">{{ ui.maxShock.unit }}</span>
+          </span>
+          <md-slider flex min="1" max="100" ng-model="config.maxShock" class="md-accent"></md-slider>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <span class="option-title option-left">{{ ui.minDamage.title }}</span>
+          <input type="number" ng-model="config.minDamage" required min="2" max="250000">
+          <span class="option-unit">{{ ui.minDamage.unit }}</span>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <span class="option-title option-left">{{ ui.maxDamage.title }}</span>
+          <input type="number" ng-model="config.maxDamage" required min="2" max="250000">
+          <span class="option-unit">{{ ui.maxDamage.unit }}</span>
+        </md-list-item>
+      </div>
+      <hr>
+      <footer>
+        <md-button ng-click="closeSettings()" class="md-raised md-primary">{{ ui.closeButtonText }}</md-button>
+        <br>
+        <span class="error"> {{ invalidReason }} </span>
+      <footer>
+    </md-sidenav>
+  </div>
+</div>
