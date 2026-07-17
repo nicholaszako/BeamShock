@@ -56,7 +56,7 @@ local function reqShock(perc)
 
   log('D', 'reqShock', 'Requested shock from bridge.')
   if not r then
-    log('E', 'reqShock', 'Error sending request to bridge. No response.')
+    log('E', 'reqShock', 'No response from bridge.')
   else
     log('D', 'reqShock', 'Bridge returned status: ' .. s)
     if c ~= 200 then
