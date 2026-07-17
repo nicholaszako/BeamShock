@@ -28,7 +28,7 @@ angular.module('beamng.apps')
       $scope.config = config;
     }
     bngApi.engineLua(
-      `beamshock_main.updateConfig(${bngApi.serializeToLua($scope.config)})`
+      `beamshock_main.onUpdateConfig(${bngApi.serializeToLua($scope.config)})`
     );
   })
   
@@ -55,7 +55,7 @@ angular.module('beamng.apps')
           + bngApi.serializeToLua(CONFIG_PATH) + ', ' 
           + bngApi.serializeToLua($scope.config) + ', ' 
           + bngApi.serializeToLua(true) + ')');
-        bngApi.engineLua('beamshock_main.updateConfig(' 
+        bngApi.engineLua('beamshock_main.onUpdateConfig(' 
           + bngApi.serializeToLua($scope.config) + ')');
       }
     }

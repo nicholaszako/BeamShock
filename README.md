@@ -1,6 +1,6 @@
 # BeamShock
 
-An OpenShock integration that encourages you to be a more careful driver by providing "shocking" feedback if you get in an accident.
+An [OpenShock](https://github.com/OpenShock) integration that encourages you to be a more careful driver by providing "shocking" feedback if you get in an accident.
 
 ## Installation
 

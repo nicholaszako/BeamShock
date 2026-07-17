@@ -5,7 +5,7 @@ local ltn12 = require('ltn12')
 
 local config = {}
 
-local function updateConfig(config_)
+local function onUpdateConfig(config_)
   config = config_
   -- log('D', 'updateConfig', dumps(config))
 end
@@ -91,13 +91,15 @@ local function onVehicleSwitched(oldId, newId, playerId)
 end
 
 local function onVehicleCrashEnded(data)
-  local damage = data.totalDamage
-  log('I', 'onVehicleCrashEnded', 'Crash detected! ('  .. damage .. ' J)')
-  tryShock(damage)
+  if config.modEnabled then
+    local damage = data.totalDamage
+    log('I', 'onVehicleCrashEnded', 'Crash detected! ('  .. damage .. ' J)')
+    tryShock(damage)
+  end
 end
 
 -- Hook exports
-M.updateConfig = updateConfig
+M.onUpdateConfig = onUpdateConfig
 M.onExtensionLoaded = onExtensionLoaded
 M.onVehicleSwitched = onVehicleSwitched
 M.onVehicleCrashEnded = onVehicleCrashEnded
