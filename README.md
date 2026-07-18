@@ -9,6 +9,14 @@ An [OpenShock](https://github.com/OpenShock) integration that encourages you to 
 - (Optional) Select the mod in BeamNG's mod manager and pack the mod.
 - Install Python dependancies and start the bridge by running `start_bridge.sh` (Linux) or `start_bridge.bat` (Windows)
 
+### Notes for serial mode
+
+- Serial mode allows you to commicate with your hub directly with virtually no latency nor cloud dependance.
+- Your hub must be directly connected to the host machine.
+- Currently, this has only been tested on Linux.
+- You may need to add yourself to the `dialout` group to r/w to serial.
+- The RF ID can be found in the edit menu of your shocker on the web app.
+
 ## Configuration
 
 * BeamShock is configurable through an in-game [UI app](https://www.beamng.com/game/support/portal/gameplay/user-interface/). 
@@ -17,5 +25,4 @@ An [OpenShock](https://github.com/OpenShock) integration that encourages you to 
 
 ### Why is a bridge required to use BeamShock?
 
-The Lua environment in BeamNG only seems to allow requests over plain HTTP. The bridge is used to send an encrypted request to OpenShock's API.
-
+The sandboxed Lua environment BeamNG provides isn't exactly intended for this kind of mod. The bridge is used to send encrypted web requests to OpenShock's API, or serial messages directly to your hub.

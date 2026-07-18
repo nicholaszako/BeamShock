@@ -1,24 +1,37 @@
 angular.module('beamng.apps')
 .controller('ctrl', function ($scope, $mdSidenav) {
-  const CONFIG_PATH = '/settings/beamshock/config.json';
-  const DEFAULT_KEY = "your_token_here"
-  
+  // Defaults and constants
+  const DEFAULT_KEY = 'your_shocker_id_here'
   const DEFAULT_LANG = 'en';
-  const SUPPORT_LANGS = ['en'];
+  const SUPPORTED_LANGS = ['en'];
   let currentLanguage = DEFAULT_LANG;
-  
+
+  $scope.supportedModels = [
+    'caixianlin',
+    'petrainer',
+    'petrainer998dr',
+    'wellturnt330',
+    'd80'
+  ]
   $scope.config = {
     modEnabled: false,
+    comMode: 'api',
     api: {
-      token: DEFAULT_KEY,
+      token: 'your_token_here',
       userAgent: "BeamShock/0.0.1",
-      shockerId: "your_shocker_id_here"
+      shockerId: DEFAULT_KEY
+    },
+    serial: {
+      model: 'caixianlin',
+      rfId: 0,
+      port: '/dev/ttyUSB0'
     },
     minShock: 5,
     maxShock: 30,
     minDamage: 10,
     maxDamage: 100000,
   }
+  const CONFIG_PATH = '/settings/beamshock/config.json';
   
   bngApi.engineLua("extensions.load('beamshock_main')");
   
@@ -34,6 +47,24 @@ angular.module('beamng.apps')
   
   $scope.openSettings = openSettings();
   $scope.closeSettings = closeSettings();
+
+  // Show only the options relevant to the communication mode
+  $scope.$watch('config.comMode', function (newVal, oldVal) {
+    // TODO: Improve pattern
+    const apiDiv = document.getElementById('api-options');
+    const serDiv = document.getElementById('ser-options');
+    if (newVal == 'api') {
+      apiDiv.style.display = 'block';
+      serDiv.style.display = 'none';
+    }
+    else if (newVal == 'ser') {
+      apiDiv.style.display = 'none';
+      serDiv.style.display = 'block';
+    }
+    else {
+      console.error('Unknown comMode value: ' + newVal);
+    }
+  })
   
   function openSettings() {
     return function() {
@@ -108,7 +139,7 @@ angular.module('beamng.apps')
   // ref: 0.25\lua\common\utils\languageMap.lua
   bngApi.engineLua('Lua:getSelectedLanguage()', (userLang) => {
     let _lang = userLang.split('_')[0];
-    currentLanguage = (SUPPORT_LANGS.includes(_lang)) ? _lang : DEFAULT_LANG;
+    currentLanguage = (SUPPORTED_LANGS.includes(_lang)) ? _lang : DEFAULT_LANG;
     console.log('set language: ' + currentLanguage);
     
     $scope.ui = getLocale(currentLanguage).UI;
@@ -128,6 +159,9 @@ angular.module('beamng.apps')
       modEnabled: {
         title: 'Mod enabled',
       },
+      comMode: {
+        title: 'Mode: '
+      },
       minShock: {
         title: 'Min shock: ',
         unit: '%'
@@ -143,7 +177,8 @@ angular.module('beamng.apps')
       },
       maxDamage: {
         title: 'Max damage: ',
-        description: 'Any damage equal or greater to this value will result in the maximum shock',
+        description: 'Any damage equal or greater to this value will result in'
+          + ' the maximum shock',
         unit: 'J'
       },
       api: {
@@ -152,6 +187,17 @@ angular.module('beamng.apps')
         },
         shockerId: {
           title: 'Shocker ID'
+        }
+      },
+      ser: {
+        model: {
+          title: 'Model'
+        },
+        rfId: {
+          title: 'RF ID: '
+        },
+        port: {
+          title: 'Port'
         }
       }
     }

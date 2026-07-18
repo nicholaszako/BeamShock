@@ -13,17 +13,46 @@
           <md-checkbox ng-model="config.modEnabled">{{ ui.modEnabled.title }}</md-checkbox>
         </md-list-item>
         <md-list-item md-no-ink>
-          <md-input-container>
-            <span class="option-title">{{ ui.api.key.title }}</span>
-            <input type="text" ng-model="config.api.token" required="" md-maxlength="64">
-          </md-input-container>
+          <span class="option-title">{{ ui.comMode.title }}</span>
+          <span class="radios">
+            <input type="radio" ng-model="config.comMode" value="api">API</input>
+            <input type="radio" ng-model="config.comMode" value="ser">Serial</input>
+          </span>
         </md-list-item>
-        <md-list-item md-no-ink>
-          <md-input-container>
-            <span class="option-title">{{ ui.api.shockerId.title }}</span>
-            <input type="text" ng-model="config.api.shockerId" required="">
-          </md-input-container>
-        </md-list-item>
+        <hr>
+        <div id="api-options" class="com-options">
+          <md-list-item md-no-ink>
+            <md-input-container>
+              <span class="option-title">{{ ui.api.key.title }}</span>
+              <input type="text" ng-model="config.api.token" required="" md-maxlength="64">
+            </md-input-container>
+          </md-list-item>
+          <md-list-item md-no-ink>
+            <md-input-container>
+              <span class="option-title">{{ ui.api.shockerId.title }}</span>
+              <input type="text" ng-model="config.api.shockerId" required="">
+            </md-input-container>
+          </md-list-item>
+        </div>
+        <div id="ser-options" class="com-options">
+          <md-list-item md-no-ink>
+            <md-input-container>
+              <span class="option-title">{{ ui.ser.model.title }}</span>
+              <input type="text" ng-model="config.ser.model" required=""> 
+            </md-input-container>
+          </md-list-item>
+          <md-list-item md-no-ink>
+            <span class="option-title option-left">{{ ui.ser.rfId.title }}</span>
+            <input type="number" ng-model="config.ser.rfId" required min="1" max="65535" placeholder="1 - 65535">
+          </md-list-item>
+          <md-list-item md-no-ink>
+            <md-input-container>
+              <span class="option-title">{{ ui.ser.port.title }}</span>
+              <input type="text" ng-model="config.ser.port" required=""> 
+            </md-input-container>
+          </md-list-item>
+        </div>
+        <hr>
         <md-list-item md-no-ink>
           <span class="option-left">
             <span class="option-title">{{ ui.minShock.title }}</span>
@@ -40,16 +69,16 @@
           </span>
           <md-slider flex min="1" max="100" ng-model="config.maxShock" class="md-accent"></md-slider>
         </md-list-item>
-          <md-list-item md-no-ink>
-            <span class="option-title option-left">{{ ui.minDamage.title }}</span>
-            <input type="number" ng-model="config.minDamage" required min="2" max="250000" placeholder="2 - 250000">
-            <span class="option-unit">{{ ui.minDamage.unit }}</span>
-          </md-list-item>
-          <md-list-item md-no-ink>
-            <span class="option-title option-left">{{ ui.maxDamage.title }}</span>
-            <input type="number" ng-model="config.maxDamage" required min="2" max="250000" placeholder="2 - 250000">
-            <span class="option-unit">{{ ui.maxDamage.unit }}</span>
-          </md-list-item>
+        <md-list-item md-no-ink>
+          <span class="option-title option-left">{{ ui.minDamage.title }}</span>
+          <input type="number" ng-model="config.minDamage" required min="2" max="250000" placeholder="2 - 250000">
+          <span class="option-unit">{{ ui.minDamage.unit }}</span>
+        </md-list-item>
+        <md-list-item md-no-ink>
+          <span class="option-title option-left">{{ ui.maxDamage.title }}</span>
+          <input type="number" ng-model="config.maxDamage" required min="2" max="250000" placeholder="2 - 250000">
+          <span class="option-unit">{{ ui.maxDamage.unit }}</span>
+        </md-list-item>
       </div>
       <hr>
       <footer>

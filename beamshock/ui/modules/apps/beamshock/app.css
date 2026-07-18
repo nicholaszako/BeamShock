@@ -27,6 +27,11 @@ input, md-slider {
   margin-right: 8px;
 }
 
+.radios {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .sidenav {
   border-radius: 5px;
   font-family: 'Noto Sans', sans-serif;
