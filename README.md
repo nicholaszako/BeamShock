@@ -11,7 +11,7 @@ An [OpenShock](https://github.com/OpenShock) integration that encourages you to 
 
 ### Notes for serial mode
 
-- Serial mode allows you to commicate with your hub directly with virtually no latency nor cloud dependance.
+- Serial mode allows you to commicate with your hub directly with minimal overhead.
 - Your hub must be directly connected to the host machine.
 - Currently, this has only been tested on Linux.
 - You may need to add yourself to the `dialout` group to r/w to serial.

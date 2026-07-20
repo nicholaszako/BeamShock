@@ -93,7 +93,7 @@ angular.module('beamng.apps')
     }
   }
   
-  // Only checks against basic input mistakes. Doesn't validate with API.
+  // Only checks against obvious input mistakes. Doesn't validate with API.
   function validateSettings() {
     s = $scope.config;
     valid = false
@@ -109,6 +109,9 @@ angular.module('beamng.apps')
     }
     else if (s.api.shockerId == '') {
       reason = 'Missing shocker ID';
+    }
+    else if (!s.ser.rfId) {
+      reason = 'Invalid RF ID';
     }
     else if (s.minShock > s.maxShock) {
       reason = 'Max shock must be greater or equal to min shock';
