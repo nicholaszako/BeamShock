@@ -1,7 +1,9 @@
 angular.module('beamng.apps')
 .controller('ctrl', function ($scope, $mdSidenav) {
   // Defaults and constants
+  const CONFIG_PATH = '/settings/beamshock/config.json';
   const DEFAULT_KEY = 'your_shocker_id_here'
+  
   const DEFAULT_LANG = 'en';
   const SUPPORTED_LANGS = ['en'];
   let currentLanguage = DEFAULT_LANG;
@@ -31,7 +33,6 @@ angular.module('beamng.apps')
     minDamage: 10,
     maxDamage: 100000,
   }
-  const CONFIG_PATH = '/settings/beamshock/config.json';
   
   bngApi.engineLua("extensions.load('beamshock_main')");
   
@@ -155,28 +156,28 @@ angular.module('beamng.apps')
     UI = {
       closeButtonText: 'Apply and Close',
       
-      settingsTitle: 'BeamShock Settings',
+      settingsTitle: '⚡ BeamShock Settings',
       modEnabled: {
         title: 'Mod enabled',
       },
       comMode: {
-        title: 'Mode: '
+        title: 'Mode'
       },
       minShock: {
-        title: 'Min shock: ',
+        title: 'Min shock',
         unit: '%'
       },
       maxShock: {
-        title: 'Max shock: ',
+        title: 'Max shock',
         unit: '%'
       },
       minDamage: {
-        title: 'Min damage: ',
+        title: 'Min damage',
         description: 'Minimum damage required to trigger the minimum shock',
         unit: 'J'
       },
       maxDamage: {
-        title: 'Max damage: ',
+        title: 'Max damage',
         description: 'Any damage equal or greater to this value will result in'
           + ' the maximum shock',
         unit: 'J'
@@ -194,7 +195,7 @@ angular.module('beamng.apps')
           title: 'Model'
         },
         rfId: {
-          title: 'RF ID: '
+          title: 'RF ID'
         },
         port: {
           title: 'Port'
