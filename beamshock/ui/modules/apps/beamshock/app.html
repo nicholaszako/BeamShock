@@ -34,7 +34,9 @@
         <div id="ser-options" class="com-options">
           <md-input-container>
             <label class="option-title">{{ ui.ser.model.title }}: </label>
-            <input type="text" ng-model="config.ser.model" required=""> 
+            <md-select ng-model="config.ser.model">
+              <md-option ng-value="opt" ng-repeat="opt in supportedModels">{{ opt }}</md-option>
+            </md-select>
           </md-input-container>
           <md-input-container>
             <label class="option-title">{{ ui.ser.rfId.title }}: </label>
