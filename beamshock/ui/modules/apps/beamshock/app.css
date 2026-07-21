@@ -18,8 +18,12 @@ md-input-container {
   padding: 2px;
 }
 
-md-slider {
-  max-width: 150px;
+md-radio-button {
+  margin: 0 15px 0 15px
+}
+
+md-radio-button > .md-label {
+  margin-left: 5px;
 }
 
 input, md-slider {
@@ -32,17 +36,12 @@ input, md-slider {
   font-family: 'Noto Sans', sans-serif;
 }
 
-.option-left {
-  width: 130px;
-  max-width: none;
+.options {
+  margin: 10px;
 }
 
-.option-title {
-  display: inline-block;
-}
-
-.option-value {
-  text-align: right;
+.options-gen {
+  margin-bottom: 5px;
 }
 
 .popout-button {

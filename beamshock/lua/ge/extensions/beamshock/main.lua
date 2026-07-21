@@ -26,6 +26,7 @@ end
 
 local function reqShock(perc)
   local req_body = {
+    com = config.comMode,
     shocks = {
       {
         id = config.api.shockerId,
@@ -33,6 +34,11 @@ local function reqShock(perc)
         intensity = perc,
         duration = 300
       }
+    },
+    serial = {
+      model = config.ser.model,
+      rfId = config.ser.rfId,
+      port = config.ser.port
     }
   }
   local res_body = {}
@@ -48,7 +54,7 @@ local function reqShock(perc)
   -- (r)eturn, status (c)ode, (h)eaders, (s)tatus line
   local r, c, h, s = http.request {
     method = 'POST',
-    url = 'http://127.0.0.1:5858/control',
+    url = 'http://127.0.0.1:5858/send',
     headers = req_headers,
     source = ltn12.source.string(req_body),
     sink = ltn12.sink.table(res_body)
@@ -71,7 +77,7 @@ local function tryShock(damage)
   else
     local shockPercent = calculateShockPercent(damage)
     log('D', 'tryShock', 'Shock triggered! (' .. shockPercent .. '%)')
-    reqShock(shockPercent)
+    reqShock(shockPercent, config.comMode)
   end
 end
 

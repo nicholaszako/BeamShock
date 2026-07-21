@@ -8,48 +8,62 @@
       <header>{{ ui.settingsTitle }}</header>
       <hr>
       <div class="options">
-        <md-list-item md-no-ink>
-          <span></span>
-          <md-checkbox ng-model="config.modEnabled">{{ ui.modEnabled.title }}</md-checkbox>
-        </md-list-item>
-        <md-list-item md-no-ink>
+        <div class="options-gen">
+          <label class="option-title">{{ ui.modEnabled.title }}: </label>
+          <input type="checkbox" ng-model="config.modEnabled">
+          <br>
+          <div layout="row" layout-align="start center">
+            <label class="option-title">{{ ui.comMode.title }}: </label>
+            <md-radio-group ng-model="config.comMode" layout="row">
+              <md-radio-button value="api" aria-label="API">API</md-radio-button>
+              <md-radio-button value="ser" aria-label="Serial">Serial</md-radio-button>
+            </md-radio-group>
+          </div>
+        </div>
+        <hr>
+        <div id="api-options" class="com-options">
           <md-input-container>
-            <span class="option-title">{{ ui.api.key.title }}</span>
+            <label class="option-title">{{ ui.api.key.title }}: </label>
             <input type="text" ng-model="config.api.token" required="" md-maxlength="64">
           </md-input-container>
-        </md-list-item>
-        <md-list-item md-no-ink>
           <md-input-container>
-            <span class="option-title">{{ ui.api.shockerId.title }}</span>
+            <label class="option-title">{{ ui.api.shockerId.title }}: </label>
             <input type="text" ng-model="config.api.shockerId" required="">
           </md-input-container>
-        </md-list-item>
-        <md-list-item md-no-ink>
-          <span class="option-left">
-            <span class="option-title">{{ ui.minShock.title }}</span>
-            <span class="option-value">{{ config.minShock }}</span>
-            <span class="option-unit">{{ ui.minShock.unit }}</span>
-          </span>
-          <md-slider flex min="1" max="100" ng-model="config.minShock" class="md-accent"></md-slider>
-        </md-list-item>
-        <md-list-item md-no-ink>
-          <span class="option-left">
-            <span class="option-title">{{ ui.maxShock.title }}</span>
-            <span class="option-value">{{ config.maxShock }}</span>
-            <span class="option-unit">{{ ui.maxShock.unit }}</span>
-          </span>
-          <md-slider flex min="1" max="100" ng-model="config.maxShock" class="md-accent"></md-slider>
-        </md-list-item>
-          <md-list-item md-no-ink>
-            <span class="option-title option-left">{{ ui.minDamage.title }}</span>
-            <input type="number" ng-model="config.minDamage" required min="2" max="250000" placeholder="2 - 250000">
-            <span class="option-unit">{{ ui.minDamage.unit }}</span>
-          </md-list-item>
-          <md-list-item md-no-ink>
-            <span class="option-title option-left">{{ ui.maxDamage.title }}</span>
-            <input type="number" ng-model="config.maxDamage" required min="2" max="250000" placeholder="2 - 250000">
-            <span class="option-unit">{{ ui.maxDamage.unit }}</span>
-          </md-list-item>
+        </div>
+        <div id="ser-options" class="com-options">
+          <md-input-container>
+            <label class="option-title">{{ ui.ser.model.title }}: </label>
+            <md-select ng-model="config.ser.model">
+              <md-option ng-value="opt" ng-repeat="opt in supportedModels">{{ opt }}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container>
+            <label class="option-title">{{ ui.ser.rfId.title }}: </label>
+            <input type="number" ng-model="config.ser.rfId" required min="1" max="65535" placeholder="1 - 65535">
+          </md-input-container>
+          <md-input-container>
+            <label class="option-title">{{ ui.ser.port.title }}: </label>
+            <input type="text" ng-model="config.ser.port" required=""> 
+          </md-input-container>
+        </div>
+        <hr>
+        <md-input-container>
+          <label class="option-title">{{ ui.minShock.title }}: {{ config.minShock }} {{ ui.minShock.unit }}</label>
+          <input type="range" min="1" max="100" ng-model="config.minShock" class="md-accent">
+        </md-input-container>
+        <md-input-container>
+          <label class="option-title">{{ ui.maxShock.title }}: {{ config.maxShock }} {{ ui.maxShock.unit }}</label>
+          <input type="range" min="1" max="100" ng-model="config.maxShock" class="md-accent">
+        </md-input-container>
+        <md-input-container>
+          <label class="option-title">{{ ui.minDamage.title }}: {{ config.minDamage }} {{ ui.minDamage.unit }}</label>
+          <input type="number" ng-model="config.minDamage" required min="2" max="250000" placeholder="2 - 250000">
+        </md-input-container>
+        <md-input-container>
+          <label class="option-title">{{ ui.maxDamage.title }}: {{ config.maxDamage }} {{ ui.maxDamage.unit }}</label>
+          <input type="number" ng-model="config.maxDamage" required min="2" max="250000" placeholder="2 - 250000">
+        </md-input-container>
       </div>
       <hr>
       <footer>

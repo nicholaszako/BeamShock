@@ -1,18 +1,32 @@
 angular.module('beamng.apps')
 .controller('ctrl', function ($scope, $mdSidenav) {
+  // Defaults and constants
   const CONFIG_PATH = '/settings/beamshock/config.json';
-  const DEFAULT_KEY = "your_token_here"
+  const DEFAULT_KEY = 'your_shocker_id_here'
   
   const DEFAULT_LANG = 'en';
-  const SUPPORT_LANGS = ['en'];
+  const SUPPORTED_LANGS = ['en'];
   let currentLanguage = DEFAULT_LANG;
-  
+
+  $scope.supportedModels = [
+    'caixianlin',
+    'petrainer',
+    'petrainer998dr',
+    'wellturnt330',
+    'd80'
+  ]
   $scope.config = {
     modEnabled: false,
+    comMode: 'api',
     api: {
-      token: DEFAULT_KEY,
+      token: 'your_token_here',
       userAgent: "BeamShock/0.0.1",
-      shockerId: "your_shocker_id_here"
+      shockerId: DEFAULT_KEY
+    },
+    serial: {
+      model: 'caixianlin',
+      rfId: 0,
+      port: '/dev/ttyUSB0'
     },
     minShock: 5,
     maxShock: 30,
@@ -34,6 +48,23 @@ angular.module('beamng.apps')
   
   $scope.openSettings = openSettings();
   $scope.closeSettings = closeSettings();
+
+  // Show only the options relevant to the communication mode
+  $scope.$watch('config.comMode', function (newVal, oldVal) {
+    const apiStyle = document.getElementById('api-options').style;
+    const serStyle = document.getElementById('ser-options').style;
+    if (newVal == 'api') {
+      apiStyle.display = 'block';
+      serStyle.display = 'none';
+    }
+    else if (newVal == 'ser') {
+      apiStyle.display = 'none';
+      serStyle.display = 'block';
+    }
+    else {
+      console.error('Unknown comMode value: ' + newVal);
+    }
+  })
   
   function openSettings() {
     return function() {
@@ -41,6 +72,7 @@ angular.module('beamng.apps')
     }
   }
   
+  // Close and save settings iff valid
   function closeSettings() {
     return function() {
       let v = validateSettings();
@@ -61,7 +93,7 @@ angular.module('beamng.apps')
     }
   }
   
-  // Only checks against basic input mistakes. Doesn't validate with API.
+  // Only checks against obvious input mistakes. Doesn't validate with API.
   function validateSettings() {
     s = $scope.config;
     valid = false
@@ -77,6 +109,9 @@ angular.module('beamng.apps')
     }
     else if (s.api.shockerId == '') {
       reason = 'Missing shocker ID';
+    }
+    else if (!s.ser.rfId) {
+      reason = 'Invalid RF ID';
     }
     else if (s.minShock > s.maxShock) {
       reason = 'Max shock must be greater or equal to min shock';
@@ -102,18 +137,12 @@ angular.module('beamng.apps')
     return {valid: valid, reason: reason};
   }
   
-  $scope.unit = function(...args) { return UiUnits.buildString(...args); }
-  
   // Get user language settings. ('<lang>_<country>')
   // ref: 0.25\lua\common\utils\languageMap.lua
   bngApi.engineLua('Lua:getSelectedLanguage()', (userLang) => {
     let _lang = userLang.split('_')[0];
-    currentLanguage = (SUPPORT_LANGS.includes(_lang)) ? _lang : DEFAULT_LANG;
-    console.log('set language: ' + currentLanguage);
-    
+    currentLanguage = (SUPPORTED_LANGS.includes(_lang)) ? _lang : DEFAULT_LANG;
     $scope.ui = getLocale(currentLanguage).UI;
-    $scope.ui.speedUnit =  UiUnits.speed(0).unit;
-    $scope.ui.lengthUnit =  UiUnits.length(10).unit;
   });
   
   function getLocale(localeName){
@@ -124,26 +153,30 @@ angular.module('beamng.apps')
     UI = {
       closeButtonText: 'Apply and Close',
       
-      settingsTitle: 'BeamShock Settings',
+      settingsTitle: '⚡ BeamShock Settings',
       modEnabled: {
         title: 'Mod enabled',
       },
+      comMode: {
+        title: 'Mode'
+      },
       minShock: {
-        title: 'Min shock: ',
+        title: 'Min shock',
         unit: '%'
       },
       maxShock: {
-        title: 'Max shock: ',
+        title: 'Max shock',
         unit: '%'
       },
       minDamage: {
-        title: 'Min damage: ',
+        title: 'Min damage',
         description: 'Minimum damage required to trigger the minimum shock',
         unit: 'J'
       },
       maxDamage: {
-        title: 'Max damage: ',
-        description: 'Any damage equal or greater to this value will result in the maximum shock',
+        title: 'Max damage',
+        description: 'Any damage equal or greater to this value will result in'
+          + ' the maximum shock',
         unit: 'J'
       },
       api: {
@@ -152,6 +185,17 @@ angular.module('beamng.apps')
         },
         shockerId: {
           title: 'Shocker ID'
+        }
+      },
+      ser: {
+        model: {
+          title: 'Model'
+        },
+        rfId: {
+          title: 'RF ID'
+        },
+        port: {
+          title: 'Port'
         }
       }
     }
