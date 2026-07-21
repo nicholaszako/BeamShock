@@ -7,11 +7,11 @@ An [OpenShock](https://github.com/OpenShock) integration that encourages you to 
 - Ensure you have Python 3 installed
 - Copy the `/beamshock` directory into your [mod folder's](https://documentation.beamng.com/tutorials/mods/installing-mods/#manual-installation) `/unpacked` directory.
 - (Optional) Select the mod in BeamNG's mod manager and pack the mod.
-- Install Python dependancies and start the bridge by running `start_bridge.sh` (Linux) or `start_bridge.bat` (Windows)
+- Run `start_bridge.sh` (Linux) or `start_bridge.bat` (Windows) to automatically install dependencies and start the bridge.
 
 ### Notes for serial mode
 
-- Serial mode allows you to commicate with your hub directly with minimal overhead.
+- Serial mode allows you to communicate with your hub directly with minimal overhead.
 - Your hub must be directly connected to the host machine.
 - Currently, this has only been tested on Linux.
 - You may need to add yourself to the `dialout` group to r/w to serial.
