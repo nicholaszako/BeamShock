@@ -51,16 +51,15 @@ angular.module('beamng.apps')
 
   // Show only the options relevant to the communication mode
   $scope.$watch('config.comMode', function (newVal, oldVal) {
-    // TODO: Improve pattern
-    const apiDiv = document.getElementById('api-options');
-    const serDiv = document.getElementById('ser-options');
+    const apiStyle = document.getElementById('api-options').style;
+    const serStyle = document.getElementById('ser-options').style;
     if (newVal == 'api') {
-      apiDiv.style.display = 'block';
-      serDiv.style.display = 'none';
+      apiStyle.display = 'block';
+      serStyle.display = 'none';
     }
     else if (newVal == 'ser') {
-      apiDiv.style.display = 'none';
-      serDiv.style.display = 'block';
+      apiStyle.display = 'none';
+      serStyle.display = 'block';
     }
     else {
       console.error('Unknown comMode value: ' + newVal);
@@ -73,6 +72,7 @@ angular.module('beamng.apps')
     }
   }
   
+  // Close and save settings iff valid
   function closeSettings() {
     return function() {
       let v = validateSettings();
@@ -137,18 +137,12 @@ angular.module('beamng.apps')
     return {valid: valid, reason: reason};
   }
   
-  $scope.unit = function(...args) { return UiUnits.buildString(...args); }
-  
   // Get user language settings. ('<lang>_<country>')
   // ref: 0.25\lua\common\utils\languageMap.lua
   bngApi.engineLua('Lua:getSelectedLanguage()', (userLang) => {
     let _lang = userLang.split('_')[0];
     currentLanguage = (SUPPORTED_LANGS.includes(_lang)) ? _lang : DEFAULT_LANG;
-    console.log('set language: ' + currentLanguage);
-    
     $scope.ui = getLocale(currentLanguage).UI;
-    $scope.ui.speedUnit =  UiUnits.speed(0).unit;
-    $scope.ui.lengthUnit =  UiUnits.length(10).unit;
   });
   
   function getLocale(localeName){

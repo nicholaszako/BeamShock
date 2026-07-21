@@ -7,7 +7,7 @@ local config = {}
 
 local function onUpdateConfig(config_)
   config = config_
-  log('D', 'updateConfig', dumps(config))
+  -- log('D', 'updateConfig', dumps(config))
 end
 
 local function calculateShockPercent(damage)

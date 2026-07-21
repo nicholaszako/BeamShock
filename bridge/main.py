@@ -18,8 +18,8 @@ def send():
     serial = request.json.get('serial')
     com = request.json.get('com')
 
+    # Prevent blocking in Beam while waiting for whole round trip
     if com == 'api':
-        # Prevent blocking in Beam by waiting for whole round trip
         Thread(target=sendWebMessage, args=(token, shock), daemon=True).start()
     elif com == 'ser':
         Thread(target=sendSerialMessage, args=(serial, shock), daemon=True).start()
@@ -47,13 +47,15 @@ def sendSerialMessage(serialDict, shockDict):
         'intensity': shockDict['intensity'],
         'durationMs': shockDict['duration']
     }
-    # Write 'rftransmit' over serial to get json message format
+    # Hub expects json message sent as bytes
+    # Firmware ref: src/serial/command_handlers/rftransmit.cpp
     messageJson = json.dumps(messageDict)
     message_str = f'rftransmit {messageJson}\n'
     message_bytes = message_str.encode('utf-8')
     port = serialDict['port']
     baudrate = 115200
     
+    print(message_str)
     with serial.Serial(port, baudrate, timeout=1) as ser:
         ser.write(message_bytes)
     

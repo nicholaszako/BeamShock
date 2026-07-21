@@ -1,7 +1,7 @@
 {
   "name" : "BeamShock UI",
   "author": "nicholaszako",
-  "version": "0.0.1",
+  "version": "0.1",
   "description": "BeamShock UI",
   "directive": "beamshock",
   "domElement": "<beamshock></beamshock>",
